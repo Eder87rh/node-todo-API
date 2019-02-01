@@ -86,6 +86,20 @@ app.patch('/todos/:id', (req, res) => {
     }).catch(err => {
         res.status(400).send();   
     })
+});
+
+app.post('/users', (req, res) => {
+    let body = _.pick(req.body, ['email', 'password'])
+    console.log('TCL: body', body);
+    
+    let user = new User(body);
+
+    user.save().then(doc => {
+        res.send(doc)
+    }).catch(err => {
+        res.status(400).send(err);
+    })
+    
 })
 
 app.listen(port, () => {
