@@ -7,16 +7,15 @@ const { User } = require('./../../models/user');
 const userOneId = new ObjectID();
 const userTwoId = new ObjectID();
 const users = [{
-    _id: new ObjectID(),
+    _id: userOneId,
     email: 'eder@eder.com',
     password: 'userOnePass',
     tokens: [{
         access: 'auth',
         token: jwt.sign({ _id: userOneId, access: 'auth' }, 'abc123').toString()
-
     }]
 },{
-    _is: userTwoId,
+    _id: userTwoId,
     email: 'jen@example.com',
     password: 'userTwoPass'
 }];
@@ -32,13 +31,13 @@ const todos = [{
 }]
 
 const populateTodos = (done) => {
-    Todo.remove({}).then(() => {
+    Todo.deleteMany({}).then(() => {
       return Todo.insertMany(todos);
     }).then(() => done());
 }
 
 const populateUsers = (done) => {
-    User.remove({}).then(() => {
+    User.deleteMany({}).then(() => {
         let userOne = new User(users[0]).save();
         let userTwo = new User(users[1]).save();
 
