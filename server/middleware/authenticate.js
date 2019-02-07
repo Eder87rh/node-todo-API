@@ -1,6 +1,6 @@
 let { User } = require('../models/user')
 
-let authenicate = (req, res, next) => {
+let authenticate = (req, res, next) => {
     let token = req.header('x-auth');
     
     User.findByToken(token).then((user) => {
@@ -16,4 +16,4 @@ let authenicate = (req, res, next) => {
     });
 };
 
-module.exports = { authenicate };
+module.exports = { authenticate };
