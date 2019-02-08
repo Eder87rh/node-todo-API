@@ -48,11 +48,19 @@ UserSchema.methods.generateAuthToken = function () {
          access
     }, 'abc123').toString();
 
-    //console.log('user.tokens',user.tokens)
-
     user.tokens = user.tokens.concat([{ access, token }]);
     return user.save().then(() => token)
 };
+
+UserSchema.methods.removeToken = function (token) {
+    let user = this;
+
+    return user.update({
+        $pull: {
+            tokens: { token }
+        }
+    })
+}
 
 UserSchema.statics.findByToken = function (token) {
     let User = this;
@@ -72,11 +80,9 @@ UserSchema.statics.findByToken = function (token) {
 };
 
 UserSchema.statics.findByCredentials = function (email, password) {
-	console.log('TCL: UserSchema.statics.findByCredentials -> password', password)
     let User = this;
 
     return User.findOne({ email }).then(user => {
-        console.log({user});
         if (!user){
             return Promise.reject();
         }
