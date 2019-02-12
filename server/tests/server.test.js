@@ -293,7 +293,7 @@ describe('PATCH /todos/:id', () => {
                 email: 'and',
                 password: '123'
             })
-            .end(done);
+            .end(done());
         });
 
         it('should not create user if email in use', done => {
@@ -304,7 +304,7 @@ describe('PATCH /todos/:id', () => {
                 password: 'Password123!'
             })
             .expect(400)
-            .end(done);
+            .end(done());
         });
     });
 
